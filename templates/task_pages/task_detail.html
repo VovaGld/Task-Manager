@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Task Details</h1>
+  <h3>Task Name: {{task.name}}</h3>
+  <h3>Task Description: {{task.description}}</h3>
+  <h3>Priority: {{ task.get_priority_display }}</h3>
+  <h3>Task Type: {{task.type}}</h3>
+  <h3>Is completed: {{task.is_completed}}</h3>
+  <h3>Deadline: {{ task.deadline }}</h3>
+
+{% endblock %}

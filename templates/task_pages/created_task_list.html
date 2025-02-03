@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    My created tasks
+    <a href="{% url 'task:task-create' %}">Create</a>
+  </h1>
+  {% for task in tasks %}
+    <p>
+      <a href="{% url "task:task-detail" pk=task.id %}"> {{task.name}} </a>
+      <a href="{% url "task:task-delete" pk=task.id %}">Delete</a>
+      <a href="{% url "task:task-update" pk=task.id %}">Edit</a>
+    </p>
+  {% endfor %}
+
+{% endblock %}

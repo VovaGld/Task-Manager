@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Task</h1>
+  <div>
+  <h3>Not complete tasks</h3>
+    {% for task in not_completed %}
+      <p>{{ task.name }} <a href="{% url "task:task-complete" pk=task.id %}">Complete</a></p>
+      {% empty %}
+      <p>No task yet.</p>
+    {% endfor %}
+  </div>
+  <div>
+  <h3>Completed tasks</h3>
+    {% for task in completed %}
+      <p>{{ task.name }}</p>
+      {% empty %}
+      <p>No task yet.</p>
+    {% endfor %}
+  </div>
+
+
+
+{% endblock %}
