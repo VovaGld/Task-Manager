@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from task.models import TaskType
+
+
+@admin.register(TaskType)
+class TaskTypeAdmin(admin.ModelAdmin):
+    list_display = ("name",)
