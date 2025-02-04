@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
@@ -10,6 +11,8 @@ from django.views.generic import (
     DetailView,
 )
 
+from account.models import Worker
+from project.models import Project
 from task.forms import TaskForm
 from task.models import Task
 
@@ -40,15 +43,27 @@ class CreatedTaskListView(ListView):
         return Task.objects.filter(author=self.request.user)
 
 
-class TaskCreateView(LoginRequiredMixin, CreateView):
-    model = Task
-    form_class = TaskForm
-    template_name = "task_pages/task_form.html"
-    success_url = reverse_lazy("task:task")
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
+@login_required
+def create_task_view(request, project_id = None):
+    project = get_object_or_404(Project, pk=project_id) if project_id else None
+
+    if request.method == "POST":
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.author = request.user
+            task.project = project
+            task.save()
+            return redirect("project:project-detail", pk=project.id) if project_id else redirect("task:task-list-created")
+    else:
+        form = TaskForm()
+        if project:
+            form.fields["assignee"].queryset = Project.objects.get(id=project.id).team.members.all()
+        else:
+            form.fields["assignee"].queryset = Worker.objects.all()
+
+    return render(request, "task_pages/task_form.html", {"form": form, "project": project})
 
 
 class TaskDetailView(LoginRequiredMixin, DetailView):

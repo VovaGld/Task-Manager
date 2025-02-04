@@ -14,7 +14,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from asyncio import tasks
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -25,5 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("task.urls", namespace="task")),
     path("teams/", include("team.urls", namespace="team")),
+    path("projects/", include("project.urls", namespace="project")),
     path("accounts/", include("django.contrib.auth.urls")),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Project: {{ project.name }}</h1>
+  <h4>Description: {{ project.description }}</h4>
+  <h3>Task <a href="{% url "task:task-project-create" project_id=project.id %}">Create</a></h3>
+  {% for task in project.tasks.all %}
+    <p>{{ task.name }}</p>
+    {% empty %}
+    <p>No task yet.</p>
+  {% endfor %}
+
+{% endblock %}
