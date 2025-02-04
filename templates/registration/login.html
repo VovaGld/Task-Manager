@@ -1,23 +1,32 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
+  <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card p-4" style="max-width: 400px; width: 100%;">
+      <h2 class="text-center mb-4">Login</h2>
 
-{% if form.errors %}
-  <p>Your username and password didn't match. Please try again.</p>
-{% endif %}
+      <form method="post">
+        {% csrf_token %}
 
-<h1>Login</h1>
+        <div class="form-group">
+          <label for="{{ form.username.id_for_label }}">Username</label>
+          {{ form.username }}
+        </div>
 
-{% if next %}
-  <p>Please login to see this page.</p>
-{% endif %}
+        <div class="form-group">
+          <label for="{{ form.password.id_for_label }}">Password</label>
+          {{ form.password }}
+        </div>
 
-<form method="post" action="{% url 'login' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
+        <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
+          <label class="form-check-label" for="rememberMe">Remember me</label>
+        </div>
 
-  <input type="submit" value="Login" class="btn btn-primary" />
-  <input type="hidden" name="next" value="{{ next }}" />
-</form>
+        <button type="submit" class="btn btn-primary w-100 mt-3">Login</button>
+      </form>
 
+
+    </div>
+  </div>
 {% endblock %}

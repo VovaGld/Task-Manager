@@ -1,9 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Team Detail</h1>
-  <h3>Team Name: {{team.name}}</h3>
-  {% for member in team.members.all %}
-    <h4>{{member.username}}</h4>
-  {% endfor %}
-{%  endblock %}
+<div>
+    <h2 class="mb-4">{{ team.name }}</h2>
+    <p><strong>Автор команди:</strong> {{ team.author }}</p>
+    <h4>Учасники:</h4>
+    <ul class="list-group mb-3">
+        {% for member in team.members.all %}
+            <li class="list-group-item">{{ member }}</li>
+        {% empty %}
+            <p class="text-muted">Наразі учасників немає.</p>
+        {% endfor %}
+    </ul>
+
+    {% if user == team.author %}
+        <a href="{% url 'team:team-update' team.id %}" class="btn btn-primary">Редагувати команду</a>
+        <a href="{% url 'team:team-delete' team.id %}" class="btn btn-danger">Видалити команду</a>
+    {% endif %}
+</div>
+{% endblock %}

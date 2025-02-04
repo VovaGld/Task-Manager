@@ -1,16 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>
-    My created tasks
-    <a href="{% url 'task:task-create' %}">Create</a>
-  </h1>
-  {% for task in tasks %}
-    <p>
-      <a href="{% url "task:task-detail" pk=task.id %}"> {{task.name}} </a>
-      <a href="{% url "task:task-delete" pk=task.id %}">Delete</a>
-      <a href="{% url "task:task-update" pk=task.id %}">Edit</a>
-    </p>
-  {% endfor %}
-
+<div>
+    <h2 class="mb-4">My created tasks</h2>
+    <a href="{% url 'task:task-create' %}" class="btn btn-success mb-3">Create new task</a>
+    {% if tasks %}
+        {% include "includes/task.html" %}
+    {% else %}
+        <p class="text-muted">No created tasks.</p>
+    {% endif %}
+</div>
 {% endblock %}
