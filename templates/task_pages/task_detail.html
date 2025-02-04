@@ -4,20 +4,20 @@
   <div>
     <div class="card border rounded p-4">
       <h2 class="card-title">{{ task.name }}</h2>
-      <p class="text-muted">Дедлайн: {{ task.deadline }}</p>
-      <p class="card-text"><strong>Опис:</strong> {{ task.description }}</p>
-      <p><strong>Пріоритет:</strong> {{ task.get_priority_display }}</p>
-      <p><strong>Автор:</strong> {{ task.author }}</p>
-      <p><strong>Відповідальні:</strong> {{ task.assignee.all|join:", " }}</p>
-      <p><strong>Статус:</strong> {% if task.is_completed %} Виконано {% else %} В процесі {% endif %}</p>
+      <p class="text-muted">Deadline: {{ task.deadline }}</p>
+      <p class="card-text"><strong>Describe:</strong> {{ task.description }}</p>
+      <p><strong>Priority:</strong> {{ task.get_priority_display }}</p>
+      <p><strong>Author:</strong> {{ task.author }}</p>
+      <p><strong>Assignees:</strong> {{ task.assignee.all|join:", " }}</p>
+      <p><strong>Status:</strong> {% if task.is_completed %} Complete {% else %} Incomplete {% endif %}</p>
 
       {% if task.project %}
-        <p><strong>Проєкт:</strong> <a
+        <p><strong>Project:</strong> <a
             href="{% url 'project:project-detail' task.project.id %}">{{ task.project.name }}</a></p>
       {% endif %}
       {% if user == task.author %}
-        <a href="{% url "task:task-update" task.id %}" class="btn btn-primary">Редагувати</a>
-        <a href="{% url "task:task-delete" task.id %}" class="btn btn-danger">Видалити</a>
+        <a href="{% url "task:task-update" task.id %}" class="btn btn-primary">Edit</a>
+        <a href="{% url "task:task-delete" task.id %}" class="btn btn-danger">Delete</a>
       {% endif %}
     </div>
   </div>

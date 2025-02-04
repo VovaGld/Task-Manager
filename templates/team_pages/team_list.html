@@ -3,8 +3,8 @@
 
 {% block content %}
 <div>
-    <h2 class="mb-4">Список команд</h2>
-    <a href="{% url 'team:team-create' %}" class="btn btn-success mb-3">Створити нову команду</a>
+    <h2 class="mb-4">Teams</h2>
+    <a href="{% url 'team:team-create' %}" class="btn btn-success mb-3">Create team</a>
 
     {% if team_list %}
         <div class="row">
@@ -13,16 +13,16 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">{{ team.name }}</h5>
-                            <p class="card-text">Автор: {{ team.author }}</p>
-                            <p class="card-text"><strong>Кількість учасників:</strong> {{ team.members.count }}</p>
-                            <a href="{% url 'team:team-detail' team.id %}" class="btn btn-primary">Детальніше</a>
+                            <p class="card-text">Author: {{ team.author }}</p>
+                            <p class="card-text"><strong>Members:</strong> {{ team.members.count }}</p>
+                            <a href="{% url 'team:team-detail' team.id %}" class="btn btn-primary">Detail</a>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
     {% else %}
-        <p class="text-muted">Наразі команд немає.</p>
+        <p class="text-muted">No teams yet.</p>
     {% endif %}
 </div>
 {% endblock %}

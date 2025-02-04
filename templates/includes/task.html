@@ -7,21 +7,21 @@
             {{ task.name }}
 
                 {% if task.is_completed %}
-                  (Виконано)
+                  (Completed)
                 {% else %}
-                  (Не виконано)
+                  (Incomplete)
                 {% endif %}
             <span class="fw-bold {% if task.priority == 1 %}text-danger{% elif task.priority == 2 %}text-warning{% else %}text-success{% endif %}">
               {{ task.get_priority_display }}
             </span>
           </h5>
-          <p class="card-text"><strong>Дедлайн:</strong> {{ task.deadline }}</p>
+          <p class="card-text"><strong>Deadline:</strong> {{ task.deadline }}</p>
 
           <div class="d-flex justify-content-between">
             {% if not task.is_completed %}
-              <a href="{% url 'task:task-complete' pk=task.id %}" class="btn btn-success btn-sm">Завершити</a>
+              <a href="{% url 'task:task-complete' pk=task.id %}" class="btn btn-success btn-sm">Complete</a>
             {% endif %}
-            <a href="{% url 'task:task-detail' task.id %}" class="btn btn-primary btn-sm">Детальніше</a>
+            <a href="{% url 'task:task-detail' task.id %}" class="btn btn-primary btn-sm">Detail</a>
           </div>
         </div>
       </div>

@@ -1,25 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Мої завдання</h1>
+  <h1>My tasks</h1>
 
-  <!-- Фільтрація -->
   <div class="mb-4">
-    <a href="{% url 'task:task' %}" class="btn btn-primary {% if not filter_type %}active{% endif %}">Усі</a>
-    <a href="{% url 'task:task' %}?filter=not_completed" class="btn btn-primary {% if filter_type == 'not_completed' %}active{% endif %}">Не виконані</a>
-    <a href="{% url 'task:task' %}?filter=completed" class="btn btn-primary {% if filter_type == 'completed' %}active{% endif %}">Виконані</a>
+    <a href="{% url 'task:task' %}" class="btn btn-primary {% if not filter_type %}active{% endif %}">All</a>
+    <a href="{% url 'task:task' %}?filter=not_completed" class="btn btn-primary {% if filter_type == 'not_completed' %}active{% endif %}">Uncompleted</a>
+    <a href="{% url 'task:task' %}?filter=completed" class="btn btn-primary {% if filter_type == 'completed' %}active{% endif %}">Completed</a>
   </div>
 
-  <!-- Завдання -->
   <div>
     {% if filter_type == 'completed' %}
-      <h3>Виконані завдання</h3>
+      <h3>Competed tasks</h3>
         {% include "includes/task.html" %}
     {% elif filter_type == 'not_completed' %}
-      <h3>Не виконані завдання</h3>
+      <h3>Uncompleted tasks</h3>
         {% include "includes/task.html" %}
     {% else %}
-      <h3>Всі завдання</h3>
+      <h3>All tasks</h3>
         {% include "includes/task.html" %}
     {% endif %}
   </div>
