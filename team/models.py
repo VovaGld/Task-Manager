@@ -5,6 +5,7 @@ class Team(models.Model):
     name = models.CharField(max_length=100)
     members = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
+        blank=True,
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,

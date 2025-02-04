@@ -5,7 +5,7 @@
   <div>
   <h3>Not complete tasks</h3>
     {% for task in not_completed %}
-      <p>{{ task.name }} <a href="{% url "task:task-complete" pk=task.id %}">Complete</a></p>
+      <p><a href="{% url "task:task-detail" pk=task.id %}">{{ task.name }}</a> <a href="{% url "task:task-complete" pk=task.id %}">Complete</a></p>
       {% empty %}
       <p>No task yet.</p>
     {% endfor %}
