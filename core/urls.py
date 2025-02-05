@@ -25,5 +25,5 @@ urlpatterns = [
     path("", include("task.urls", namespace="task")),
     path("teams/", include("team.urls", namespace="team")),
     path("projects/", include("project.urls", namespace="project")),
-    path("accounts/", include("django.contrib.auth.urls")),
+    path("accounts/", include("account.urls", namespace="account")),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

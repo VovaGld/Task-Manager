@@ -1,10 +1,10 @@
 from django.shortcuts import redirect
-from django.views.generic import UpdateView
+from django.views import View
 
 from team.models import Team
 
 
-class TeamListMixin(UpdateView):
+class TeamListMixin(View):
     def dispatch(self, request, *args, **kwargs):
         if not Team.objects.filter(author=request.user).exists():
             return redirect("team:team-create")
