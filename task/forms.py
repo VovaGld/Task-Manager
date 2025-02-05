@@ -22,6 +22,7 @@ class TaskForm(forms.ModelForm):
             "task_type": forms.RadioSelect(),
         }
 
+
 class SearchForm(forms.Form):
     search = forms.CharField(
         max_length=255,

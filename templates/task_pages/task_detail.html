@@ -13,7 +13,7 @@
 
       {% if task.project %}
         <p><strong>Project:</strong> <a
-            href="{% url 'project:project-detail' task.project.id %}">{{ task.project.name }}</a></p>
+            href="{% url "project:project-detail" task.project.id %}">{{ task.project.name }}</a></p>
       {% endif %}
       {% if user == task.author %}
         <a href="{% url "task:task-update" task.id %}" class="btn btn-primary">Edit</a>

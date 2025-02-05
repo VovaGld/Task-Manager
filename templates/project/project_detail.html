@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div>
+  <div>
     <h2 class="mb-4">{{ project.name }}</h2>
     <p><strong>Author:</strong> {{ project.author }}</p>
     <p><strong>Describe:</strong> {{ project.description }}</p>
@@ -13,11 +13,11 @@
 
     </ul>
 
-    <a href="{% url 'task:task-project-create' project.id %}" class="btn btn-success">Add task</a>
+    <a href="{% url "task:task-project-create" project.id %}" class="btn btn-success">Add task</a>
 
     {% if user == project.author %}
-        <a href="{% url 'project:project-update' project.id %}" class="btn btn-primary">Edit</a>
-        <a href="{% url 'project:project-delete' project.id %}" class="btn btn-danger">Delete</a>
+      <a href="{% url "project:project-update" project.id %}" class="btn btn-primary">Edit</a>
+      <a href="{% url "project:project-delete" project.id %}" class="btn btn-danger">Delete</a>
     {% endif %}
-</div>
+  </div>
 {% endblock %}

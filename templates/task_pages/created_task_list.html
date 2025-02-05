@@ -3,7 +3,7 @@
 {% block content %}
 <div>
     <h2 class="mb-4">My created tasks</h2>
-    <a href="{% url 'task:task-create' %}" class="btn btn-success mb-3">Create new task</a>
+    <a href="{% url "task:task-create" %}" class="btn btn-success mb-3">Create new task</a>
     {% include "includes/search_form.html" %}
     <br>
     {% if tasks %}

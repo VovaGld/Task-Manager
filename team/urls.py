@@ -2,7 +2,11 @@ from django.urls import path
 
 from team.views import (
     TeamListView,
-    TeamCreateView, TeamUpdateView, TeamDeleteView, TeamDetailView)
+    TeamCreateView,
+    TeamUpdateView,
+    TeamDeleteView,
+    TeamDetailView,
+)
 
 urlpatterns = [
     path("", TeamListView.as_view(), name="team-list"),

@@ -25,8 +25,8 @@ class Index(LoginRequiredMixin, ListView):
         queryset = super().get_queryset()
         queryset = queryset.filter(assignee=self.request.user)
 
-        filter_type = self.request.GET.get('filter')
-        order_by = self.request.GET.getlist('order')
+        filter_type = self.request.GET.get("filter")
+        order_by = self.request.GET.getlist("order")
         print(filter_type)
         print(order_by)
         if filter_type == "uncompleted":
@@ -41,7 +41,6 @@ class Index(LoginRequiredMixin, ListView):
             queryset = queryset.order_by("deadline")
 
         return queryset
-
 
 
 class CreatedTaskListView(LoginRequiredMixin, ListView):
@@ -59,16 +58,15 @@ class CreatedTaskListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = Task.objects.filter(author=self.request.user)
-        search = self.request.GET.get('search')
+        search = self.request.GET.get("search")
         if search:
             return queryset.filter(name__icontains=search)
 
         return queryset
 
 
-
 @login_required
-def create_task_view(request, project_id = None):
+def create_task_view(request, project_id=None):
     project = get_object_or_404(Project, pk=project_id) if project_id else None
 
     if request.method == "POST":
@@ -79,15 +77,23 @@ def create_task_view(request, project_id = None):
             task.project = project
             task.save()
             form.save_m2m()
-            return redirect("project:project-detail", pk=project.id) if project_id else redirect("task:task-list-created")
+            return (
+                redirect("project:project-detail", pk=project.id)
+                if project_id
+                else redirect("task:task-list-created")
+            )
     else:
         form = TaskForm()
         if project:
-            form.fields["assignee"].queryset = Project.objects.get(id=project.id).team.members.all()
+            form.fields["assignee"].queryset = Project.objects.get(
+                id=project.id
+            ).team.members.all()
         else:
             form.fields["assignee"].queryset = Worker.objects.all()
 
-    return render(request, "task_pages/task_form.html", {"form": form, "project": project})
+    return render(
+        request, "task_pages/task_form.html", {"form": form, "project": project}
+    )
 
 
 class TaskDetailView(LoginRequiredMixin, DetailView):
