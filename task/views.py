@@ -48,9 +48,9 @@ class CreatedTaskListView(LoginRequiredMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         contex = super(CreatedTaskListView, self).get_context_data(**kwargs)
 
-        manufacturer_search = self.request.GET.get("search")
+        search = self.request.GET.get("search")
 
-        contex["search"] = SearchForm(initial={"search": manufacturer_search})
+        contex["search"] = SearchForm(initial={"search": search})
         return contex
 
     def get_queryset(self):
