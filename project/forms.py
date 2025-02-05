@@ -1,7 +1,6 @@
 from django import forms
 
 from project.models import Project
-from task.forms import TaskForm
 from team.models import Team
 
 
@@ -17,6 +16,7 @@ class ProjectForm(forms.ModelForm):
         if user:
             self.fields['team'].queryset = Team.objects.filter(author=user)
 
-
-# class TaskForProjectForm(TaskForm):
+        self.fields['name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['description'].widget.attrs.update({'class': 'form-control'})
+        self.fields['team'].widget.attrs.update({'class': 'form-select'})
 

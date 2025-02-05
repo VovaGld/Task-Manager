@@ -5,7 +5,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
-    CreateView,
     UpdateView,
     DeleteView,
     DetailView,
@@ -13,34 +12,58 @@ from django.views.generic import (
 
 from account.models import Worker
 from project.models import Project
-from task.forms import TaskForm
+from task.forms import TaskForm, SearchForm
 from task.models import Task
 
 
 class Index(LoginRequiredMixin, ListView):
     model = Task
-    context_object_name = "tasks"
     template_name = "task_pages/home_page.html"
+    context_object_name = "tasks"
 
-    def get_context_data(self, **kwargs):
-        context = super(Index, self).get_context_data(**kwargs)
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(assignee=self.request.user)
 
-        context["not_completed"] = self.get_queryset().filter(
-            assignee=self.request.user, is_completed=False
-        )
-        context["completed"] = self.get_queryset().filter(
-            assignee=self.request.user, is_completed=True
-        )
-        return context
+        filter_type = self.request.GET.get('filter')
+        order_by = self.request.GET.getlist('order')
+        print(filter_type)
+        print(order_by)
+        if filter_type == "uncompleted":
+            queryset = queryset.filter(is_completed=False)
+        elif filter_type == "completed":
+            queryset = queryset.filter(is_completed=True)
+
+        if "priority" in order_by:
+            queryset = queryset.order_by("priority")
+        elif "date" in order_by:
+            print("True")
+            queryset = queryset.order_by("deadline")
+
+        return queryset
 
 
-class CreatedTaskListView(ListView):
+
+class CreatedTaskListView(LoginRequiredMixin, ListView):
     model = Task
     context_object_name = "tasks"
     template_name = "task_pages/created_task_list.html"
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        contex = super(CreatedTaskListView, self).get_context_data(**kwargs)
+
+        manufacturer_search = self.request.GET.get("search")
+
+        contex["search"] = SearchForm(initial={"search": manufacturer_search})
+        return contex
+
     def get_queryset(self):
-        return Task.objects.filter(author=self.request.user)
+        queryset = Task.objects.filter(author=self.request.user)
+        search = self.request.GET.get('search')
+        if search:
+            return queryset.filter(name__icontains=search)
+
+        return queryset
 
 
 
@@ -55,6 +78,7 @@ def create_task_view(request, project_id = None):
             task.author = request.user
             task.project = project
             task.save()
+            form.save_m2m()
             return redirect("project:project-detail", pk=project.id) if project_id else redirect("task:task-list-created")
     else:
         form = TaskForm()

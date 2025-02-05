@@ -3,22 +3,49 @@
 {% block content %}
   <h1>My tasks</h1>
 
-  <div class="mb-4">
-    <a href="{% url 'task:task' %}" class="btn btn-primary {% if not filter_type %}active{% endif %}">All</a>
-    <a href="{% url 'task:task' %}?filter=not_completed" class="btn btn-primary {% if filter_type == 'not_completed' %}active{% endif %}">Uncompleted</a>
-    <a href="{% url 'task:task' %}?filter=completed" class="btn btn-primary {% if filter_type == 'completed' %}active{% endif %}">Completed</a>
-  </div>
+{#  <div class="mb-4">#}
+{#    <a href="{% url 'task:task' %}" class="btn btn-primary {% if not filter_type %}active{% endif %}">All</a>#}
+{#    <a href="{% url 'task:task' %}?filter=not_completed" class="btn btn-primary {% if filter_type == 'not_completed' %}active{% endif %}">Uncompleted</a>#}
+{#    <a href="{% url 'task:task' %}?filter=completed" class="btn btn-primary {% if filter_type == 'completed' %}active{% endif %}">Completed</a>#}
+{#  </div>#}
+<form method="get" action="">
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Filters & Ordering
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+            <li><h6 class="dropdown-header">Filters</h6></li>
+            <li class="dropdown-item">
+                <input type="radio" name="filter" value="all" id="filterAll">
+                <label for="filterAll">All</label>
+            </li>
+            <li class="dropdown-item">
+                <input type="radio" name="filter" value="completed" id="completed">
+                <label for="completed">Completed</label>
+            </li>
+            <li class="dropdown-item">
+                <input type="radio" name="filter" value="uncompleted" id="uncompleted">
+                <label for="uncompleted">Uncompleted</label>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header">Ordering</h6></li>
+            <li class="dropdown-item">
+                <input type="checkbox" name="order" value="date" id="date">
+                <label for="date">Deadline</label>
+            </li>
+            <li class="dropdown-item">
+                <input type="checkbox" name="order" value="priority" id="priority">
+                <label for="priority">Priority</label>
+            </li>
+        </ul>
+    </div>
+    <button type="submit" class="btn btn-success mt-2">Apply</button>
+</form>
+
 
   <div>
-    {% if filter_type == 'completed' %}
-      <h3>Competed tasks</h3>
-        {% include "includes/task.html" %}
-    {% elif filter_type == 'not_completed' %}
-      <h3>Uncompleted tasks</h3>
-        {% include "includes/task.html" %}
-    {% else %}
       <h3>All tasks</h3>
         {% include "includes/task.html" %}
-    {% endif %}
   </div>
+
 {% endblock %}

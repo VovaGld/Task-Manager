@@ -21,3 +21,11 @@ class TaskForm(forms.ModelForm):
             "assignee": forms.CheckboxSelectMultiple(),
             "task_type": forms.RadioSelect(),
         }
+
+class SearchForm(forms.Form):
+    search = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(attrs={"placeholder": "Search"}),
+    )
