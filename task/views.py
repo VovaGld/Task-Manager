@@ -27,8 +27,6 @@ class Index(LoginRequiredMixin, ListView):
 
         filter_type = self.request.GET.get("filter")
         order_by = self.request.GET.getlist("order")
-        print(filter_type)
-        print(order_by)
         if filter_type == "uncompleted":
             queryset = queryset.filter(is_completed=False)
         elif filter_type == "completed":
@@ -37,7 +35,6 @@ class Index(LoginRequiredMixin, ListView):
         if "priority" in order_by:
             queryset = queryset.order_by("priority")
         elif "date" in order_by:
-            print("True")
             queryset = queryset.order_by("deadline")
 
         return queryset

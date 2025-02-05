@@ -16,8 +16,11 @@
             href="{% url "project:project-detail" task.project.id %}">{{ task.project.name }}</a></p>
       {% endif %}
       {% if user == task.author %}
-        <a href="{% url "task:task-update" task.id %}" class="btn btn-primary">Edit</a>
+        <div class="col-4">
+         <a href="{% url "task:task-update" task.id %}" class="btn btn-primary">Edit</a>
         <a href="{% url "task:task-delete" task.id %}" class="btn btn-danger">Delete</a>
+        </div>
+
       {% endif %}
     </div>
   </div>

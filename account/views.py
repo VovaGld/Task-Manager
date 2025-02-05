@@ -12,6 +12,7 @@ class CustomLoginView(LoginView):
         response = super().form_valid(form)
 
         remember_me = form.cleaned_data.get("remember_me")
+
         if remember_me:
             self.request.session.set_expiry(settings.EXPIRY_TIME)
 
@@ -19,6 +20,3 @@ class CustomLoginView(LoginView):
             self.request.session.set_expiry(0)
 
         return response
-
-def no_permission_view(request):
-    return render(request, "no_permission_massage.html")
