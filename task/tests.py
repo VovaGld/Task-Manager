@@ -12,6 +12,7 @@ TASK_LIST_URL = reverse("task:task")
 CREATED_TASK_LIST_URL = reverse("task:task-list-created")
 TASK_CREATE_URL = reverse("task:task-create")
 
+
 class TaskTests(TestCase):
     def setUp(self):
         position = Position.objects.create(name="test")
@@ -60,7 +61,9 @@ class TaskTests(TestCase):
     def test_task_list_view(self):
         self.client.force_login(self.user2)
         response = self.client.get(TASK_LIST_URL)
-        self.assertEqual(list(response.context["tasks"]), [self.task1, self.task2, self.task3])
+        self.assertEqual(
+            list(response.context["tasks"]), [self.task1, self.task2, self.task3]
+        )
 
         self.client.force_login(self.user1)
         response = self.client.get(TASK_LIST_URL)
@@ -79,17 +82,23 @@ class TaskTests(TestCase):
     def test_order_tasks_by_priority(self):
         self.client.force_login(self.user2)
         response = self.client.get(TASK_LIST_URL + "?order=priority")
-        self.assertEqual(list(response.context["tasks"]), [self.task2, self.task1, self.task3])
+        self.assertEqual(
+            list(response.context["tasks"]), [self.task2, self.task1, self.task3]
+        )
 
     def test_order_tasks_by_deadline(self):
         self.client.force_login(self.user2)
         response = self.client.get(TASK_LIST_URL + "?order=date")
-        self.assertEqual(list(response.context["tasks"]), [self.task3, self.task2, self.task1])
+        self.assertEqual(
+            list(response.context["tasks"]), [self.task3, self.task2, self.task1]
+        )
 
     def test_created_task_view(self):
         self.client.force_login(self.user1)
         response = self.client.get(CREATED_TASK_LIST_URL)
-        self.assertEqual(list(response.context["tasks"]), [self.task1, self.task2, self.task3])
+        self.assertEqual(
+            list(response.context["tasks"]), [self.task1, self.task2, self.task3]
+        )
 
     def test_created_task_search(self):
         self.client.force_login(self.user1)
@@ -108,4 +117,3 @@ class TaskTests(TestCase):
         response = self.client.post(TASK_CREATE_URL, data)
         task = Task.objects.last()
         self.assertEqual(task.author, self.user1)
-

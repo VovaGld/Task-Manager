@@ -48,6 +48,7 @@ class TeamViewTest(TestCase):
         url = reverse("team:team-list")
         response = self.client.get(url)
         self.assertEqual(list(response.context["team_list"]), [self.team1])
+
     def test_auto_add_author(self):
         self.client.force_login(self.user1)
         url = reverse("team:team-create")
