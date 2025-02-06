@@ -23,7 +23,7 @@ class Command(BaseCommand):
                 self.style.SUCCESS(f"User {new_user_username} is already exists.")
             )
         else:
-            position_instance = Position.objects.get_or_create(
+            position_instance, _ = Position.objects.get_or_create(
                 name=position,
             )
             user = User(
